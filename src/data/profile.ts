@@ -29,17 +29,17 @@ export const profile = {
   profileImage: '/images/profile.webp',
   social: {
     zalo: {
-      phone: 'YOUR_PHONE_NUMBER',
-      webUrl: 'YOUR_ZALO_WEB_URL',
-      appUrl: 'YOUR_ZALO_APP_DEEP_LINK',
+      phone: '0397068580',
+      webUrl: 'https://zaloapp.com/qr/p/1kz0014sag5r3',
+      appUrl: 'https://zaloapp.com/qr/p/1kz0014sag5r3',
     },
     facebook: {
-      username: 'YOUR_FACEBOOK_USERNAME',
+      username: 'Như Quỳnh JP',
       profileId: 'YOUR_FACEBOOK_PROFILE_ID',
-      webUrl: 'YOUR_FACEBOOK_WEB_URL',
-      appUrlIOS: 'YOUR_FACEBOOK_IOS_DEEP_LINK',
-      appUrlAndroid: 'YOUR_FACEBOOK_ANDROID_DEEP_LINK',
+      webUrl: 'https://www.facebook.com/nhuquynhJP.kunNihongo',
+      appUrlIOS: 'fb://profile?id=nhuquynhJP.kunNihongo',
+      appUrlAndroid: 'fb://profile?id=nhuquynhJP.kunNihongo',
     },
-    tiktok: { username: 'YOUR_TIKTOK_USERNAME', webUrl: 'YOUR_TIKTOK_URL' },
+    tiktok: { username: 'tiengnhatez', webUrl: 'https://www.tiktok.com/@tiengnhatez' },
   },
 } as const;

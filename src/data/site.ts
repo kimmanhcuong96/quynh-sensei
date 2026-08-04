@@ -1,5 +1,5 @@
 export const site = {
-  url: 'YOUR_SITE_URL',
+  url: "https://quynh-sensei.pages.dev",
   title: 'Kiều Như Quỳnh | Giáo viên tiếng Nhật',
   description:
     'Portfolio của Kiều Như Quỳnh – giáo viên tiếng Nhật, tốt nghiệp loại Giỏi Trường Đại học Ngoại thương, hiện giảng dạy tại Trung tâm Nhật ngữ Riki Nihongo. Khám phá tài liệu học tiếng Nhật N5, N4 và các nội dung hữu ích.',
