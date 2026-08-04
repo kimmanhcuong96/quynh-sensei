@@ -29,6 +29,26 @@ export function openAppWithFallback({ appUrl, webUrl, fallbackDelay = 1200 }: Ap
 }
 
 export function initSocialLinks() {
+  document.querySelectorAll<HTMLButtonElement>('[data-zalo-phone]').forEach((button) => {
+    if (button.dataset.zaloBound === 'true') return;
+    button.dataset.zaloBound = 'true';
+    button.addEventListener('click', () => {
+      const phone = button.dataset.phone ?? '';
+      const compact = button.dataset.compact === 'true';
+      const label = button.querySelector<HTMLElement>('[data-zalo-label]');
+      const detail = button.querySelector<HTMLElement>('[data-zalo-detail]');
+
+      if (label) label.textContent = compact ? 'Liên hệ Zalo' : 'Hãy liên hệ Zalo theo số điện thoại này';
+      if (detail) {
+        detail.textContent = phone;
+        detail.classList.remove('hidden');
+        detail.classList.add('block');
+      }
+      button.setAttribute('aria-label', `Hãy liên hệ Zalo theo số điện thoại ${phone}`);
+      showToast(`Hãy liên hệ Zalo theo số điện thoại này: ${phone}`);
+    });
+  });
+
   document.querySelectorAll<HTMLButtonElement>('[data-social-link]').forEach((button) => {
     if (button.dataset.socialBound === 'true') return;
     button.dataset.socialBound = 'true';

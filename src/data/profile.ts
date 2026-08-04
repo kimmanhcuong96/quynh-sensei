@@ -38,13 +38,12 @@ export const profile = {
     },
     facebook: {
       username: 'Như Quỳnh JP',
-      profileId: 'YOUR_FACEBOOK_PROFILE_ID',
+      profileId: '100010448197192',
       webUrl: 'https://www.facebook.com/nhuquynhJP.kunNihongo',
-      // Không cần Facebook numeric ID: mở URL hồ sơ trực tiếp bên trong app
-      appUrlIOS:
-        'fb://facewebmodal/f?href=https%3A%2F%2Fwww.facebook.com%2FnhuquynhJP.kunNihongo',
+      // Dùng numeric profile ID để mở thẳng hồ sơ trong ứng dụng Facebook
+      appUrlIOS: 'fb://profile/100010448197192',
       appUrlAndroid:
-        'intent://www.facebook.com/nhuquynhJP.kunNihongo#Intent;scheme=https;package=com.facebook.katana;S.browser_fallback_url=https%3A%2F%2Fwww.facebook.com%2FnhuquynhJP.kunNihongo;end',
+        'intent://profile/100010448197192#Intent;scheme=fb;package=com.facebook.katana;action=android.intent.action.VIEW;category=android.intent.category.BROWSABLE;S.browser_fallback_url=https%3A%2F%2Fwww.facebook.com%2Fprofile.php%3Fid%3D100010448197192;end',
     },
     tiktok: { username: 'tiengnhatez', webUrl: 'https://www.tiktok.com/@tiengnhatez' },
   },
