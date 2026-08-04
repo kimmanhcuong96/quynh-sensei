@@ -10,16 +10,20 @@ export function showToast(message: string) {
 
 export function openAppWithFallback({ appUrl, webUrl, fallbackDelay = 1200 }: AppLinkOptions) {
   if (isPlaceholder(webUrl)) { showToast('Liên kết đang được cập nhật'); return; }
-  if (isPlaceholder(appUrl)) { window.open(webUrl, '_blank', 'noopener,noreferrer'); return; }
+  if (isPlaceholder(appUrl)) { window.location.assign(webUrl); return; }
   let leftPage = false;
   const onVisibility = () => { if (document.hidden) leftPage = true; };
-  document.addEventListener('visibilitychange', onVisibility, { once: true });
-  const clickedAt = Date.now(); window.location.href = appUrl;
+  const onPageHide = () => { leftPage = true; };
+  document.addEventListener('visibilitychange', onVisibility);
+  window.addEventListener('pagehide', onPageHide, { once: true });
+  window.location.assign(appUrl);
   window.setTimeout(() => {
     document.removeEventListener('visibilitychange', onVisibility);
-    if (!leftPage && !document.hidden && Date.now() - clickedAt >= fallbackDelay) {
+    window.removeEventListener('pagehide', onPageHide);
+    if (!leftPage && !document.hidden) {
       showToast('Không thể mở ứng dụng, đang chuyển sang phiên bản web');
-      window.open(webUrl, '_blank', 'noopener,noreferrer');
+      // Chuyển cùng tab để không bị trình duyệt trong TikTok chặn popup.
+      window.location.assign(webUrl);
     }
   }, fallbackDelay);
 }

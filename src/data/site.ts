@@ -4,7 +4,7 @@ export const site = {
   description:
     'Portfolio của Kiều Như Quỳnh – giáo viên tiếng Nhật, tốt nghiệp loại Giỏi Trường Đại học Ngoại thương, hiện giảng dạy tại Trung tâm Nhật ngữ Riki Nihongo. Khám phá tài liệu học tiếng Nhật N5, N4 và các nội dung hữu ích.',
   themeColor: '#b4233f',
-  ogImage: '/og/og-default.webp',
+  ogImage: '/og/og-default.png',
   stats: [
     { value: 'JLPT N2', label: 'Năng lực tiếng Nhật' },
     { value: 'Nhiều năm', label: 'Kinh nghiệm giảng dạy' },

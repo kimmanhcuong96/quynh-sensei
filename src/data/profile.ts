@@ -31,14 +31,20 @@ export const profile = {
     zalo: {
       phone: '0397068580',
       webUrl: 'https://zaloapp.com/qr/p/1kz0014sag5r3',
-      appUrl: 'https://zaloapp.com/qr/p/1kz0014sag5r3',
+      // iOS dùng Universal Link của Zalo; Android dùng Intent để ưu tiên mở app
+      appUrlIOS: 'https://zaloapp.com/qr/p/1kz0014sag5r3',
+      appUrlAndroid:
+        'intent://zaloapp.com/qr/p/1kz0014sag5r3#Intent;scheme=https;package=com.zing.zalo;S.browser_fallback_url=https%3A%2F%2Fzaloapp.com%2Fqr%2Fp%2F1kz0014sag5r3;end',
     },
     facebook: {
       username: 'Như Quỳnh JP',
       profileId: 'YOUR_FACEBOOK_PROFILE_ID',
       webUrl: 'https://www.facebook.com/nhuquynhJP.kunNihongo',
-      appUrlIOS: 'fb://profile?id=nhuquynhJP.kunNihongo',
-      appUrlAndroid: 'fb://profile?id=nhuquynhJP.kunNihongo',
+      // Không cần Facebook numeric ID: mở URL hồ sơ trực tiếp bên trong app
+      appUrlIOS:
+        'fb://facewebmodal/f?href=https%3A%2F%2Fwww.facebook.com%2FnhuquynhJP.kunNihongo',
+      appUrlAndroid:
+        'intent://www.facebook.com/nhuquynhJP.kunNihongo#Intent;scheme=https;package=com.facebook.katana;S.browser_fallback_url=https%3A%2F%2Fwww.facebook.com%2FnhuquynhJP.kunNihongo;end',
     },
     tiktok: { username: 'tiengnhatez', webUrl: 'https://www.tiktok.com/@tiengnhatez' },
   },
