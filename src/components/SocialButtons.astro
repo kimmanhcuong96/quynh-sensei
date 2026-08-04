@@ -1,16 +1,19 @@
 ---
-import { MessageCircle } from '@lucide/astro';
+import { MessageCircle, Phone } from '@lucide/astro';
 import { profile } from '../data/profile';
 interface Props { compact?: boolean; }
 const { compact = false } = Astro.props;
 ---
-<div class:list={[compact ? 'grid grid-cols-2 gap-2' : 'grid gap-3']}>
+<div class:list={[compact ? 'grid grid-cols-3 gap-2' : 'grid gap-3']}>
   <button type="button" data-social-link data-web-url={profile.social.zalo.webUrl} data-app-ios={profile.social.zalo.appUrlIOS} data-app-android={profile.social.zalo.appUrlAndroid} class:list={['group flex min-h-12 items-center rounded-2xl bg-[#0877e8] text-left font-bold text-white transition hover:scale-[1.02] active:scale-[.98]', compact ? 'justify-center gap-2 px-3 py-3 text-sm' : 'gap-3 p-4']} aria-label="Mở Zalo để nhắn tin">
     <MessageCircle size={compact ? 19 : 23} aria-hidden="true" /><span>{compact ? 'Zalo' : <><span class="block">Nhắn tin qua Zalo</span><span class="mt-0.5 block text-xs font-medium text-blue-100">Tư vấn khóa học và tài liệu</span></>}</span>
   </button>
   <button type="button" data-social-link data-web-url={profile.social.facebook.webUrl} data-app-ios={profile.social.facebook.appUrlIOS} data-app-android={profile.social.facebook.appUrlAndroid} class:list={['group flex min-h-12 items-center rounded-2xl bg-[#1877f2] text-left font-bold text-white transition hover:scale-[1.02] active:scale-[.98]', compact ? 'justify-center gap-2 px-3 py-3 text-sm' : 'gap-3 p-4']} aria-label="Kết nối qua Facebook">
     <svg width={compact ? 19 : 23} height={compact ? 19 : 23} viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M14 8h3V4h-3c-3.3 0-5 2-5 5v2H6v4h3v7h4v-7h3.2l.8-4h-4V9c0-.7.3-1 1-1Z" /></svg><span>{compact ? 'Facebook' : <><span class="block">Kết nối qua Facebook</span><span class="mt-0.5 block text-xs font-medium text-blue-100">Theo dõi và nhắn tin với mình</span></>}</span>
   </button>
+  <a href={`tel:${profile.social.zalo.phone}`} class:list={['group flex min-h-12 items-center rounded-2xl bg-[#16a34a] text-left font-bold text-white transition hover:scale-[1.02] active:scale-[.98]', compact ? 'justify-center gap-1.5 px-2 py-3 text-xs' : 'gap-3 p-4']} aria-label="Mở ứng dụng điện thoại để gọi">
+    <Phone size={compact ? 18 : 23} aria-hidden="true" /><span>{compact ? 'Điện thoại' : <><span class="block">Gọi điện thoại</span><span class="mt-0.5 block text-xs font-medium text-green-100">Mở ứng dụng gọi và điền sẵn số</span></>}</span>
+  </a>
 </div>
 <script>
   import { initSocialLinks } from '../scripts/social-links';
