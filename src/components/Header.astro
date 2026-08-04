@@ -1,0 +1,12 @@
+---
+import { Cherry } from '@lucide/astro';
+---
+<header class="sticky top-0 z-50 border-b border-sakura-100/80 bg-[#fffaf7]/90 backdrop-blur-xl">
+  <div class="container-page flex h-16 items-center justify-between">
+    <a href="#top" class="flex items-center gap-2 font-extrabold tracking-tight"><Cherry class="text-sakura-600" size={20} aria-hidden="true" />Quỳnh Sensei</a>
+    <nav aria-label="Điều hướng chính" class="hidden items-center gap-7 text-sm font-semibold md:flex">
+      <a class="hover:text-sakura-700" href="#about">Giới thiệu</a><a class="hover:text-sakura-700" href="#materials">Tài liệu</a><a class="hover:text-sakura-700" href="#contact">Liên hệ</a>
+    </nav>
+    <a href="#materials" class="rounded-full bg-sakura-700 px-4 py-2 text-sm font-bold text-white md:hidden">Xem tài liệu</a>
+  </div>
+</header>

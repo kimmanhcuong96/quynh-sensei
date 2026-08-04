@@ -1,0 +1,22 @@
+{
+  "name": "quynh-sensei-portfolio",
+  "version": "1.0.0",
+  "private": true,
+  "type": "module",
+  "scripts": {
+    "dev": "node scripts/astro.mjs dev",
+    "build": "node scripts/astro.mjs build",
+    "preview": "node scripts/astro.mjs preview",
+    "check": "node scripts/astro.mjs check"
+  },
+  "dependencies": {
+    "@tailwindcss/vite": "latest",
+    "astro": "latest",
+    "@lucide/astro": "latest",
+    "tailwindcss": "latest"
+  },
+  "devDependencies": {
+    "@astrojs/check": "latest",
+    "typescript": "latest"
+  }
+}

@@ -1,0 +1,5 @@
+User-agent: *
+Allow: /
+
+# Thay YOUR_SITE_URL trước khi xuất bản
+Sitemap: YOUR_SITE_URL/sitemap-index.xml

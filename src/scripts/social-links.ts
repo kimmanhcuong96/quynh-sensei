@@ -1,0 +1,40 @@
+export interface AppLinkOptions { appUrl: string; webUrl: string; fallbackDelay?: number; }
+export const isPlaceholder = (value?: string) => !value || value.startsWith('YOUR_');
+
+export function showToast(message: string) {
+  const toast = document.querySelector<HTMLElement>('#toast');
+  if (!toast) return;
+  toast.textContent = message; toast.classList.remove('opacity-0', 'translate-y-4');
+  window.setTimeout(() => toast.classList.add('opacity-0', 'translate-y-4'), 2600);
+}
+
+export function openAppWithFallback({ appUrl, webUrl, fallbackDelay = 1200 }: AppLinkOptions) {
+  if (isPlaceholder(webUrl)) { showToast('Liên kết đang được cập nhật'); return; }
+  if (isPlaceholder(appUrl)) { window.open(webUrl, '_blank', 'noopener,noreferrer'); return; }
+  let leftPage = false;
+  const onVisibility = () => { if (document.hidden) leftPage = true; };
+  document.addEventListener('visibilitychange', onVisibility, { once: true });
+  const clickedAt = Date.now(); window.location.href = appUrl;
+  window.setTimeout(() => {
+    document.removeEventListener('visibilitychange', onVisibility);
+    if (!leftPage && !document.hidden && Date.now() - clickedAt >= fallbackDelay) {
+      showToast('Không thể mở ứng dụng, đang chuyển sang phiên bản web');
+      window.open(webUrl, '_blank', 'noopener,noreferrer');
+    }
+  }, fallbackDelay);
+}
+
+export function initSocialLinks() {
+  document.querySelectorAll<HTMLButtonElement>('[data-social-link]').forEach((button) => {
+    if (button.dataset.socialBound === 'true') return;
+    button.dataset.socialBound = 'true';
+    button.addEventListener('click', () => {
+      const webUrl = button.dataset.webUrl ?? '';
+      if (isPlaceholder(webUrl)) { showToast('Liên kết đang được cập nhật'); return; }
+      const mobile = /Android|iPhone|iPad|iPod/i.test(navigator.userAgent);
+      if (!mobile) { window.open(webUrl, '_blank', 'noopener,noreferrer'); return; }
+      const appUrl = /iPhone|iPad|iPod/i.test(navigator.userAgent) ? button.dataset.appIos : button.dataset.appAndroid;
+      openAppWithFallback({ appUrl: appUrl ?? '', webUrl });
+    });
+  });
+}

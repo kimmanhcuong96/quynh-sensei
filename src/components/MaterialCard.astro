@@ -1,0 +1,23 @@
+---
+import { Eye, Download, ShoppingBag, FileText, CalendarDays } from '@lucide/astro';
+import type { Material } from '../data/materials';
+interface Props { material: Material; }
+const { material } = Astro.props;
+const categoryLabels: Record<string, string> = { Vocabulary:'Từ vựng', Grammar:'Ngữ pháp', Kanji:'Kanji', Reading:'Đọc hiểu', Listening:'Nghe hiểu', Exercises:'Bài tập', Teaching:'Học tập' };
+const price = (value?: number) => value?.toLocaleString('vi-VN') + '₫';
+const updated = material.updatedAt ? new Intl.DateTimeFormat('vi-VN').format(new Date(material.updatedAt)) : '';
+const searchText = [material.title, material.shortDescription, material.level, material.type, ...material.categories, ...material.tags].join(' ').toLocaleLowerCase('vi');
+---
+<article class="material-card card lift flex min-w-0 flex-col overflow-hidden" data-level={material.level} data-type={material.type} data-categories={material.categories.join(',')} data-search={searchText}>
+  <div class="relative aspect-[16/10] overflow-hidden bg-sakura-50"><img src={material.coverImage} alt={`Bìa tài liệu ${material.title}`} width="640" height="400" loading="lazy" class="h-full w-full object-cover transition duration-300 hover:scale-[1.025]" />
+    <div class="absolute left-3 top-3 flex flex-wrap gap-2"><span class:list={['rounded-full px-3 py-1 text-xs font-extrabold text-white', material.type === 'free' ? 'bg-emerald-600' : 'bg-sakura-700']}>{material.type === 'free' ? 'Miễn phí' : 'Trả phí'}</span><span class="rounded-full bg-white/95 px-3 py-1 text-xs font-extrabold text-ink shadow-sm">{material.level}</span></div>
+    {material.featured && <span class="absolute bottom-3 right-3 rounded-full bg-amber-100 px-3 py-1 text-xs font-extrabold text-amber-800">Nổi bật</span>}
+  </div>
+  <div class="flex flex-1 flex-col p-5"><div class="flex flex-wrap gap-1.5">{material.categories.slice(0,2).map((category) => <span class="rounded-md bg-sakura-50 px-2 py-1 text-[11px] font-bold text-sakura-700">{categoryLabels[category]}</span>)}</div>
+    <h3 class="mt-3 text-lg font-extrabold leading-6">{material.title}</h3><p class="mt-2 line-clamp-3 text-sm leading-6 text-[#6d6467]">{material.shortDescription}</p>
+    <div class="mt-4 flex flex-wrap gap-x-4 gap-y-2 text-xs text-[#786f72]">{material.fileFormat && <span class="flex items-center gap-1"><FileText size={14} aria-hidden="true" />{material.fileFormat}{material.pageCount ? ` · ${material.pageCount} trang` : ''}</span>}{updated && <span class="flex items-center gap-1"><CalendarDays size={14} aria-hidden="true" />{updated}</span>}</div>
+    <div class="mt-auto pt-5">{material.type === 'paid' ? <div class="mb-3 flex items-baseline gap-2"><strong class="text-xl text-sakura-700">{price(material.price)}</strong>{material.originalPrice && <del class="text-sm text-[#8a8184]">{price(material.originalPrice)}</del>}</div> : <p class="mb-3 text-lg font-extrabold text-emerald-700">Miễn phí</p>}
+      <div class="grid grid-cols-2 gap-2"><button type="button" class="material-detail min-h-11 rounded-xl border border-sakura-200 px-3 text-sm font-bold text-sakura-700 hover:bg-sakura-50" data-material-id={material.id}><span class="inline-flex items-center gap-1.5"><Eye size={16} aria-hidden="true" />Chi tiết</span></button><button type="button" class="material-action min-h-11 rounded-xl bg-sakura-700 px-3 text-sm font-bold text-white hover:bg-sakura-600" data-url={material.type === 'free' ? material.downloadUrl : material.purchaseUrl} data-title={material.title}><span class="inline-flex items-center gap-1.5">{material.type === 'free' ? <Download size={16} aria-hidden="true" /> : <ShoppingBag size={16} aria-hidden="true" />}{material.type === 'free' ? 'Tải tài liệu' : 'Mua tài liệu'}</span></button></div>
+    </div>
+  </div>
+</article>

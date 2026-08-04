@@ -1,0 +1,5 @@
+---
+import { testimonials } from '../data/testimonials';
+const published = testimonials.filter((item) => item.published);
+---
+{published.length > 0 && <section class="section-pad"><div class="container-page"><p class="section-kicker">Phản hồi thực tế</p><h2 class="section-title">Học viên nói gì?</h2><div class="mt-8 grid gap-4 md:grid-cols-2">{published.map((item) => <figure class="card p-6"><blockquote class="leading-7 text-[#625a5d]">“{item.content}”</blockquote><figcaption class="mt-4 font-bold">{item.name}{item.role && <span class="block text-sm font-normal text-[#766d70]">{item.role}</span>}</figcaption></figure>)}</div></div></section>}

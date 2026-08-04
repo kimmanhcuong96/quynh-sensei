@@ -1,0 +1,8 @@
+---
+import SocialButtons from './SocialButtons.astro';
+---
+<aside id="mobile-contact-bar" class="fixed inset-x-0 bottom-0 z-40 border-t border-sakura-100 bg-white/95 px-3 pt-2 backdrop-blur-xl md:hidden" style="padding-bottom:calc(.5rem + env(safe-area-inset-bottom))" aria-label="Liên hệ nhanh"><SocialButtons compact /></aside>
+<script>
+  const bar = document.querySelector<HTMLElement>('#mobile-contact-bar'); const footer = document.querySelector('footer');
+  if(bar && footer) new IntersectionObserver(([entry]) => bar.toggleAttribute('hidden', Boolean(entry?.isIntersecting)), {threshold:.05}).observe(footer);
+</script>

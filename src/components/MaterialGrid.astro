@@ -1,0 +1,42 @@
+---
+import { Search, SlidersHorizontal } from '@lucide/astro';
+import { materials } from '../data/materials';
+import MaterialCard from './MaterialCard.astro';
+import MaterialModal from './MaterialModal.astro';
+const filters = [
+  ['all','Tất cả'], ['free','Miễn phí'], ['paid','Trả phí'], ['N5','N5'], ['N4','N4'], ['Vocabulary','Từ vựng'], ['Grammar','Ngữ pháp'], ['Exercises','Bài tập'],
+] as const;
+---
+<section id="materials" class="section-pad bg-[#fff7f7]">
+  <div class="container-page"><p class="section-kicker">Góc học tập</p><h2 class="section-title">Tài liệu học tiếng Nhật</h2><p class="section-copy">Các tài liệu được mình trực tiếp biên soạn hoặc chọn lọc nhằm giúp bạn học tiếng Nhật dễ hiểu, có hệ thống và tiết kiệm thời gian hơn.</p>
+    <div class="mt-8"><label for="material-search" class="mb-2 block text-sm font-bold">Tìm tài liệu</label><div class="relative max-w-xl"><Search class="pointer-events-none absolute left-4 top-1/2 -translate-y-1/2 text-[#817679]" size={19} aria-hidden="true" /><input id="material-search" type="search" placeholder="Tìm tài liệu..." class="h-12 w-full rounded-2xl border border-sakura-200 bg-white pl-12 pr-4 text-base shadow-sm placeholder:text-[#9a9093]" /></div></div>
+    <div class="mt-5 flex items-center gap-3"><SlidersHorizontal class="shrink-0 text-sakura-700" size={19} aria-hidden="true" /><div class="-mr-4 flex gap-2 overflow-x-auto pb-2 pr-4" role="group" aria-label="Lọc tài liệu">{filters.map(([value,label], index) => <button type="button" class:list={['filter-btn min-h-10 shrink-0 rounded-full border px-4 text-sm font-bold transition', index === 0 ? 'border-sakura-700 bg-sakura-700 text-white' : 'border-sakura-200 bg-white text-[#645b5e]']} data-filter={value} aria-pressed={index === 0 ? 'true' : 'false'}>{label}</button>)}</div></div>
+    <p id="material-count" class="mt-3 text-sm text-[#766d70]" aria-live="polite">{materials.length} tài liệu</p>
+    <div id="material-grid" class="mt-6 grid gap-5 md:grid-cols-2 lg:grid-cols-3">{materials.map((material) => <MaterialCard material={material} />)}</div>
+    <div id="material-empty" hidden class="card mt-6 p-10 text-center"><p class="font-extrabold">Không tìm thấy tài liệu phù hợp</p><p class="mt-2 text-sm text-[#71686b]">Hãy thử từ khóa hoặc bộ lọc khác nhé.</p></div>
+  </div>
+  <MaterialModal />
+  <script is:inline id="materials-data" type="application/json" set:html={JSON.stringify(materials).replace(/</g, '\\u003c')} />
+</section>
+<script>
+  import type { Material } from '../data/materials';
+  import { isPlaceholder, showToast } from '../scripts/social-links';
+  const cards = [...document.querySelectorAll<HTMLElement>('.material-card')];
+  const buttons = [...document.querySelectorAll<HTMLButtonElement>('.filter-btn')];
+  const search = document.querySelector<HTMLInputElement>('#material-search');
+  const count = document.querySelector<HTMLElement>('#material-count'); const empty = document.querySelector<HTMLElement>('#material-empty');
+  let filter = 'all';
+  const applyFilters = () => { const query = (search?.value ?? '').trim().toLocaleLowerCase('vi'); let visible = 0; cards.forEach((card) => { const matchesFilter = filter === 'all' || card.dataset.type === filter || card.dataset.level === filter || (card.dataset.categories ?? '').split(',').includes(filter); const matchesSearch = (card.dataset.search ?? '').includes(query); const show = matchesFilter && matchesSearch; card.hidden = !show; if(show) visible++; }); if(count) count.textContent = `${visible} tài liệu`; if(empty) empty.hidden = visible !== 0; if(visible === 0) showToast('Không tìm thấy tài liệu phù hợp'); };
+  buttons.forEach((button) => button.addEventListener('click', () => { filter = button.dataset.filter ?? 'all'; buttons.forEach((item) => { const active = item === button; item.setAttribute('aria-pressed', String(active)); item.classList.toggle('bg-sakura-700', active); item.classList.toggle('text-white', active); item.classList.toggle('border-sakura-700', active); item.classList.toggle('bg-white', !active); }); applyFilters(); }));
+  search?.addEventListener('input', applyFilters);
+  const openUrl = (url?: string) => { if(isPlaceholder(url)) { showToast('Liên kết đang được cập nhật'); return; } window.open(url, '_blank', 'noopener,noreferrer'); };
+  document.querySelectorAll<HTMLButtonElement>('.material-action').forEach((button) => button.addEventListener('click', () => openUrl(button.dataset.url)));
+  const dataNode = document.querySelector<HTMLScriptElement>('#materials-data'); const materialData: Material[] = JSON.parse(dataNode?.textContent ?? '[]');
+  const dialog = document.querySelector<HTMLDialogElement>('#material-modal'); const close = document.querySelector<HTMLButtonElement>('#modal-close'); let opener: HTMLElement | null = null; let activeMaterial: Material | undefined;
+  const setText = (selector:string, value:string) => { const node = document.querySelector<HTMLElement>(selector); if(node) node.textContent = value; };
+  document.querySelectorAll<HTMLButtonElement>('.material-detail').forEach((button) => button.addEventListener('click', () => { activeMaterial = materialData.find((item) => item.id === button.dataset.materialId); if(!dialog || !activeMaterial) return; opener = button; const image = document.querySelector<HTMLImageElement>('#modal-cover'); if(image) { image.src=activeMaterial.coverImage; image.alt=`Bìa tài liệu ${activeMaterial.title}`; } setText('#modal-title',activeMaterial.title); setText('#modal-description',activeMaterial.description ?? activeMaterial.shortDescription); setText('#modal-type',activeMaterial.type === 'free' ? 'Miễn phí':'Trả phí'); setText('#modal-level',activeMaterial.level); setText('#modal-format',activeMaterial.fileFormat ?? 'Đang cập nhật'); setText('#modal-pages',activeMaterial.pageCount ? `${activeMaterial.pageCount} trang`:'Đang cập nhật'); setText('#modal-audience',activeMaterial.audience ?? 'Thông tin đang cập nhật'); setText('#modal-price',activeMaterial.type === 'free' ? 'Miễn phí' : activeMaterial.price?.toLocaleString('vi-VN')+'₫'); const list=document.querySelector<HTMLUListElement>('#modal-contents'); if(list) { list.replaceChildren(...(activeMaterial.contents ?? []).map((value) => { const li=document.createElement('li'); li.textContent=value; return li; })); } const preview=document.querySelector<HTMLButtonElement>('#modal-preview'); if(preview) preview.hidden = !activeMaterial.previewUrl; dialog.showModal(); document.body.classList.add('modal-open'); close?.focus(); }));
+  const closeModal=()=>{ dialog?.close(); document.body.classList.remove('modal-open'); opener?.focus(); };
+  close?.addEventListener('click',closeModal); dialog?.addEventListener('click',(event)=>{ if(event.target===dialog) closeModal(); }); dialog?.addEventListener('cancel',(event)=>{ event.preventDefault(); closeModal(); });
+  dialog?.addEventListener('keydown',(event)=>{ if(event.key!=='Tab')return; const focusable=[...dialog.querySelectorAll<HTMLElement>('button:not([hidden]),a[href],input')].filter((el)=>!el.hasAttribute('disabled')); const first=focusable[0],last=focusable.at(-1); if(event.shiftKey&&document.activeElement===first){event.preventDefault();last?.focus()}else if(!event.shiftKey&&document.activeElement===last){event.preventDefault();first?.focus()} });
+  document.querySelector<HTMLButtonElement>('#modal-preview')?.addEventListener('click',()=>openUrl(activeMaterial?.previewUrl)); document.querySelector<HTMLButtonElement>('#modal-action')?.addEventListener('click',()=>openUrl(activeMaterial?.type==='free'?activeMaterial.downloadUrl:activeMaterial?.purchaseUrl));
+</script>

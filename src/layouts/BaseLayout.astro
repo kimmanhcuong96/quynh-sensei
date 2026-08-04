@@ -1,0 +1,39 @@
+---
+import '../styles/global.css';
+import { site } from '../data/site';
+import { profile } from '../data/profile';
+
+interface Props { title?: string; description?: string; }
+const { title = site.title, description = site.description } = Astro.props;
+const configured = !site.url.startsWith('YOUR_');
+const canonical = configured ? new URL(Astro.url.pathname, site.url).toString() : `YOUR_SITE_URL${Astro.url.pathname}`;
+const ogImage = configured ? new URL(site.ogImage, site.url).toString() : `YOUR_SITE_URL${site.ogImage}`;
+const jsonLd = {
+  '@context': 'https://schema.org', '@type': 'Person', name: profile.fullName,
+  jobTitle: profile.jobTitle, alumniOf: { '@type': 'CollegeOrUniversity', name: profile.university },
+  worksFor: { '@type': 'Organization', name: profile.workplace }, url: canonical,
+};
+---
+<!doctype html>
+<html lang="vi">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width" />
+    <meta name="theme-color" content={site.themeColor} />
+    <meta name="description" content={description} />
+    <link rel="canonical" href={canonical} />
+    <link rel="icon" href="/favicon.svg" type="image/svg+xml" />
+    <meta property="og:type" content="website" /><meta property="og:locale" content="vi_VN" />
+    <meta property="og:title" content={title} /><meta property="og:description" content={description} />
+    <meta property="og:url" content={canonical} /><meta property="og:image" content={ogImage} />
+    <meta name="twitter:card" content="summary_large_image" /><meta name="twitter:title" content={title} />
+    <meta name="twitter:description" content={description} /><meta name="twitter:image" content={ogImage} />
+    <title>{title}</title>
+    <script is:inline type="application/ld+json" set:html={JSON.stringify(jsonLd)} />
+  </head>
+  <body>
+    <a href="#main-content" class="fixed left-4 top-3 z-[100] -translate-y-20 rounded-full bg-white px-4 py-2 font-bold shadow-lg focus:translate-y-0">Bỏ qua đến nội dung chính</a>
+    <slot />
+    <div id="toast" class="pointer-events-none fixed bottom-24 left-1/2 z-[100] max-w-[calc(100%-2rem)] -translate-x-1/2 translate-y-4 rounded-full bg-ink px-5 py-3 text-center text-sm font-semibold text-white opacity-0 shadow-xl transition" role="status" aria-live="polite"></div>
+  </body>
+</html>

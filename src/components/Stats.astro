@@ -1,0 +1,8 @@
+---
+import { site } from '../data/site';
+---
+<section aria-label="Thông tin nổi bật" class="container-page relative z-10 -mb-8">
+  <div class="card grid grid-cols-2 overflow-hidden md:grid-cols-4">
+    {site.stats.map((item, index) => <div class:list={['p-5 text-center md:p-7', index > 0 && 'border-l border-sakura-100', index > 1 && 'border-t border-sakura-100 md:border-t-0']}><strong class="block text-base font-extrabold text-sakura-700 md:text-xl">{item.value}</strong><span class="mt-1 block text-xs leading-5 text-[#71686b] md:text-sm">{item.label}</span></div>)}
+  </div>
+</section>

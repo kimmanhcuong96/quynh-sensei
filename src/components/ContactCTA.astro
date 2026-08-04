@@ -1,0 +1,10 @@
+---
+import { Send, Sparkles } from '@lucide/astro';
+import SocialButtons from './SocialButtons.astro';
+---
+<section id="contact" class="section-pad bg-[linear-gradient(135deg,#a9233f,#d94b65)] text-white">
+  <div class="container-page grid items-center gap-8 lg:grid-cols-[1fr_25rem]">
+    <div><p class="flex items-center gap-2 text-xs font-extrabold uppercase tracking-[.15em] text-sakura-100"><Sparkles size={16} aria-hidden="true" />Cùng bắt đầu nhé</p><h2 class="mt-3 text-[clamp(2rem,5vw,3.5rem)] font-extrabold leading-tight tracking-[-.04em]">Bạn cần một lộ trình học phù hợp?</h2><p class="mt-4 max-w-2xl leading-7 text-sakura-100">Hãy nhắn cho mình nếu bạn cần tư vấn về tài liệu, khóa học hoặc chưa biết nên bắt đầu từ đâu. Mình sẽ phản hồi ngay khi có thể.</p></div>
+    <div class="rounded-[1.5rem] bg-white p-5 text-ink shadow-2xl"><p class="mb-4 flex items-center gap-2 font-extrabold"><Send size={19} class="text-sakura-600" aria-hidden="true" />Chọn kênh liên hệ</p><SocialButtons /></div>
+  </div>
+</section>

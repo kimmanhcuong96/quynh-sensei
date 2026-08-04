@@ -1,0 +1,12 @@
+---
+import { Check, Quote } from '@lucide/astro';
+import { profile } from '../data/profile';
+---
+<section id="about" class="section-pad bg-white">
+  <div class="container-page">
+    <div class="grid gap-10 lg:grid-cols-[1.05fr_.95fr] lg:gap-16">
+      <div><p class="section-kicker">Câu chuyện của mình</p><h2 class="section-title">Về mình</h2><div class="mt-6 space-y-4 text-[15px] leading-7 text-[#625a5d] md:text-base">{profile.longBio.map((paragraph) => <p>{paragraph}</p>)}</div><blockquote class="mt-7 rounded-r-2xl border-l-4 border-sakura-500 bg-sakura-50 p-5 text-sm font-semibold italic leading-7 text-[#594d51]"><Quote size={22} class="mb-2 text-sakura-500" aria-hidden="true" />“{profile.quote}”</blockquote></div>
+      <div class="card self-start p-6 md:p-8"><h3 class="text-xl font-extrabold">Mình có thể đồng hành cùng bạn</h3><ul class="mt-5 space-y-4">{profile.highlights.map((item) => <li class="flex gap-3 text-sm leading-6 text-[#625a5d]"><span class="mt-0.5 grid h-6 w-6 shrink-0 place-items-center rounded-full bg-sakura-100 text-sakura-700"><Check size={15} stroke-width={3} aria-hidden="true" /></span>{item}</li>)}</ul></div>
+    </div>
+  </div>
+</section>

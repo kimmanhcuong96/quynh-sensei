@@ -1,0 +1,24 @@
+---
+import { ArrowDown, Award, GraduationCap } from '@lucide/astro';
+import { profile } from '../data/profile';
+import SocialButtons from './SocialButtons.astro';
+---
+<section id="top" class="relative overflow-hidden pb-16 pt-10 md:pb-24 md:pt-16">
+  <div class="absolute inset-0 -z-10 bg-[radial-gradient(circle_at_85%_15%,#ffcfd5_0,transparent_28%),linear-gradient(180deg,#fff7f7_0%,#fffaf7_70%)]"></div>
+  <div class="container-page grid items-center gap-10 lg:grid-cols-[1.05fr_.95fr] lg:gap-16">
+    <div class="reveal order-2 lg:order-1">
+      <div class="mb-5 flex flex-wrap gap-2"><span class="rounded-full border border-sakura-200 bg-white px-3 py-1.5 text-xs font-extrabold text-sakura-700">Giáo viên tiếng Nhật</span><span class="rounded-full bg-sakura-700 px-3 py-1.5 text-xs font-extrabold text-white">JLPT N2</span></div>
+      <h1 class="text-[clamp(2.4rem,8vw,4.75rem)] font-extrabold leading-[1.04] tracking-[-.055em]">Xin chào, mình là<br /><span class="bg-gradient-to-r from-sakura-700 to-sakura-500 bg-clip-text text-transparent">Kiều Như Quỳnh</span></h1>
+      <p class="mt-6 max-w-2xl text-base leading-7 text-[#625a5d] md:text-lg md:leading-8">{profile.shortBio}</p>
+      <p class="mt-3 max-w-xl text-sm leading-6 text-[#786e71]">{profile.intro}</p>
+      <div class="mt-7 flex flex-col gap-3 sm:flex-row"><a href="#materials" class="inline-flex min-h-12 items-center justify-center gap-2 rounded-full bg-sakura-700 px-6 font-bold text-white shadow-lg shadow-sakura-200 transition hover:scale-[1.02]">Xem tài liệu <ArrowDown size={18} aria-hidden="true" /></a><a href="#contact" class="inline-flex min-h-12 items-center justify-center rounded-full border border-sakura-200 bg-white px-6 font-bold text-sakura-700 transition hover:bg-sakura-50">Liên hệ với mình</a></div>
+    </div>
+    <div class="reveal order-1 mx-auto w-full max-w-md lg:order-2">
+      <div class="relative"><div class="absolute -inset-3 -z-10 rotate-3 rounded-[2rem] bg-sakura-200/70"></div>
+        <picture><source srcset={profile.profileImage} type="image/webp" /><img src="/images/profile-placeholder.webp" alt="Ảnh đại diện của cô Kiều Như Quỳnh" width="800" height="1000" fetchpriority="high" class="aspect-[4/5] w-full rounded-[1.75rem] border-4 border-white object-cover shadow-2xl shadow-[#713546]/15" /></picture>
+        <div class="absolute -bottom-4 left-4 flex items-center gap-2 rounded-2xl border border-sakura-100 bg-white/95 px-4 py-3 text-sm font-bold shadow-xl backdrop-blur"><GraduationCap class="text-sakura-600" size={20} aria-hidden="true" /> Ngôn ngữ Nhật · FTU</div>
+      </div>
+      <div class="card mt-8 p-4"><p class="mb-3 flex items-center gap-2 font-extrabold"><Award size={19} class="text-sakura-600" aria-hidden="true" />Kết nối với mình</p><SocialButtons /></div>
+    </div>
+  </div>
+</section>

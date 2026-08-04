@@ -1,0 +1,8 @@
+---
+import { BookOpen, Route, PencilLine, MessageCircleHeart } from '@lucide/astro';
+import { site } from '../data/site';
+const icons = { BookOpen, Route, PencilLine, MessageCircleHeart };
+---
+<section class="section-pad bg-white">
+  <div class="container-page"><div class="text-center"><p class="section-kicker">Học nhẹ nhàng, tiến bộ vững vàng</p><h2 class="section-title">Bạn nhận được gì?</h2></div><div class="mt-10 grid gap-4 sm:grid-cols-2 lg:grid-cols-4">{site.benefits.map((item) => { const Icon = icons[item.icon]; return <article class="card lift p-6"><span class="grid h-12 w-12 place-items-center rounded-2xl bg-sakura-100 text-sakura-700"><Icon size={23} aria-hidden="true" /></span><h3 class="mt-5 text-lg font-extrabold">{item.title}</h3><p class="mt-2 text-sm leading-6 text-[#6d6467]">{item.description}</p></article> })}</div></div>
+</section>
